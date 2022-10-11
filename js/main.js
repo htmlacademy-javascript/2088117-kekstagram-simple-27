@@ -1,10 +1,12 @@
 
 function checkLineWidth (lineWidth) {
-  let minLength = 20;
-  let maxLength = 140;
-if (lineWidth > minLength && lineWidth < maxLength) {
-    return true
-} else {
-    return false
-}
+  const MINLENGTH = 20;
+  const MAXLENGTH = 140;
+  if (lineWidth > MINLENGTH && lineWidth < MAXLENGTH) {
+    return true;
+  } else {
+    return false;
+  }
 };
+
+checkLineWidth(59);
