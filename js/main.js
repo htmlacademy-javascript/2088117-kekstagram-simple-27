@@ -7,6 +7,6 @@ function checkLineWidth (lineWidth) {
   } else {
     return false;
   }
-};
+}
 
 checkLineWidth(59);
