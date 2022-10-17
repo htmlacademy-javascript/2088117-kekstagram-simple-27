@@ -1,12 +1,10 @@
 
-function checkLineWidth (lineWidth) {
-  const MINLENGTH = 20;
-  const MAXLENGTH = 140;
-  if (lineWidth > MINLENGTH && lineWidth < MAXLENGTH) {
-    return true;
+function checkLineWidth (string, number) {
+  if (string <= number) {
+  return true;
   } else {
-    return false;
+  return false;
+   }
   }
-}
 
-checkLineWidth(59);
+  checkLineWidth('сегодня понедельник',140);
