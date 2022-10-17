@@ -1,10 +1,9 @@
-
-function checkLineWidth (string, number) {
+function checkLineWidth(string, number) {
   if (string <= number) {
-  return true;
+    return true;
   } else {
-  return false;
-   }
+    return false;
   }
+}
 
-  checkLineWidth('сегодня понедельник',140);
+checkLineWidth("сегодня понедельник", 140);
