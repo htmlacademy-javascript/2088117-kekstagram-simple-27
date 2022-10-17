@@ -6,4 +6,4 @@ function checkLineWidth(string, number) {
   }
 }
 
-checkLineWidth("сегодня понедельник", 140);
+checkLineWidth('сегодня понедельник', 140);
