@@ -78,7 +78,7 @@ const createPhotoDescription = (index) => ({
 
 const getPhotoDescription = () => Array.from(
   { length: photosCount }, (_, PhotoDescriptionIndex) =>
-  createPhotoDescription(PhotoDescriptionIndex +1)
+    createPhotoDescription(PhotoDescriptionIndex + 1)
 );
 
 getPhotoDescription();
