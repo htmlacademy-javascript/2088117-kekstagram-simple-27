@@ -60,6 +60,5 @@ const getPhotoDescription = () => Array.from(
   { length: photosCount }, (_, PhotoDescriptionIndex) =>
     createPhotoDescription(PhotoDescriptionIndex + 1)
 );
-
 export {getPhotoDescription};
 

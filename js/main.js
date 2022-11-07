@@ -1,3 +1,7 @@
-import './data.js';
-import './check-line.js';
+import {getPhotoDescription} from './data.js';
+import {checkLineWidth} from './check-line.js';
+
+
+getPhotoDescription();
+checkLineWidth();
 
