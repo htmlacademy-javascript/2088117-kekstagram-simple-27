@@ -1,13 +1,4 @@
-import {getPhotoDescription} from './data.js';
-import {checkLineWidth} from './check-line.js';
-import {renderPhotos} from './photo.js';
-//import '.form.js';
 import {isEscapeKey} from './util.js';
-
-getPhotoDescription();
-checkLineWidth();
-renderPhotos();
-
 
 const photoForm = document.querySelector('.img-upload__form');
 const modalForm = document.querySelector('.img-upload__overlay');
@@ -35,7 +26,7 @@ function showModalForm () {
 }
 
 function hideModalForm () {
-  //modalForm.reset(); Зачем тут эта штука?
+  modalForm.reset();
   pristine.reset();
   modalForm.classList.add('hidden');
   body.classList.remove('modal-open');
