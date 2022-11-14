@@ -1,11 +1,11 @@
 import {getPhotoDescription} from './data.js';
 import {renderPhotos} from './photo.js';
-import {showForm, hideForm, validForm} from './form.js';
+import {showForm, hideForm, sendForm} from './form.js';
 
 
 getPhotoDescription();
 renderPhotos();
-validForm();
+sendForm();
 showForm();
 hideForm();
 

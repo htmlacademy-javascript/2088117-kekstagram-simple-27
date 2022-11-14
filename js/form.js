@@ -17,7 +17,7 @@ const pristine = new Pristine(commentField, {
 });
 
 
-const validForm = function () {
+const sendForm = function () {
   photoForm.addEventListener('submit', (evt) => {
     const isValid = pristine.validate();
     const commentLength = textareaField.value;
@@ -65,4 +65,4 @@ const hideForm = function() {
 };
 
 
-export {showForm, hideForm, validForm};
+export {showForm, hideForm, sendForm};
