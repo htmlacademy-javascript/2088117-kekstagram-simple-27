@@ -1,7 +1,11 @@
 import {getPhotoDescription} from './data.js';
-import {checkLineWidth} from './check-line.js';
 import {renderPhotos} from './photo.js';
+import {showForm, hideForm, sendForm} from './form.js';
+
 
 getPhotoDescription();
-checkLineWidth();
 renderPhotos();
+sendForm();
+showForm();
+hideForm();
+
