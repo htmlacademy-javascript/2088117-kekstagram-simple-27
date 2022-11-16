@@ -1,5 +1,7 @@
 import {isEscapeKey} from './util.js';
 import {checkLineWidth} from './check-line.js';
+import {resetScaleValue} from './scale.js';
+import {resetEffects} from './effects.js';
 
 const photoForm = document.querySelector('.img-upload__form');
 const modalForm = photoForm.querySelector('.img-upload__overlay');
@@ -33,36 +35,29 @@ const sendForm = function () {
 const onModalFormEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    hideModalForm();
+    onCancelButtonClick();
   }
 };
 
-function showModalForm () {
+function onUploadFileSubmit () {
   modalForm.classList.remove('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onModalFormEscKeydown);
   textareaField.value = '';
 }
 
-function hideModalForm () {
+function onCancelButtonClick () {
   photoForm.reset();
+  resetScaleValue();
+  resetEffects();
   pristine.reset();
   modalForm.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onModalFormEscKeydown);
 }
 
-const showForm = function() {
-  uploadFile.addEventListener('change', () => {
-    showModalForm();
-  });
-};
 
-const hideForm = function() {
-  cancelButton.addEventListener('click', () => {
-    hideModalForm();
-  });
-};
+uploadFile.addEventListener('change', onUploadFileSubmit);
+cancelButton.addEventListener('click', onCancelButtonClick);
 
-
-export {showForm, hideForm, sendForm};
+export {sendForm};
