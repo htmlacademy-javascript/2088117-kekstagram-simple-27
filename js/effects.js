@@ -89,7 +89,7 @@ const onSliderUpdate = () => {
   }
   const sliderValue = sliderElement.noUiSlider.get();
   image.style.filter = `${currentEffect.style}(${sliderValue}${currentEffect.unit})`;
-  image.className.add(`effects__preview--${currentEffect.name}`);
+  image.className = `effects__preview--${currentEffect.name}`;
   effectLevel.value = sliderValue;
 };
 

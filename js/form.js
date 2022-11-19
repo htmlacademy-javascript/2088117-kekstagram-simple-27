@@ -1,7 +1,8 @@
 import {isEscapeKey} from './util.js';
-import {checkLineWidth} from './check-line.js';
 import {resetScaleValue} from './scale.js';
 import {resetEffects} from './effects.js';
+import {sendData} from './api.js';
+import {showSuccessMessage, showErrorMessage} from './messages.js';
 
 const photoForm = document.querySelector('.img-upload__form');
 const modalForm = photoForm.querySelector('.img-upload__overlay');
@@ -19,23 +20,24 @@ const pristine = new Pristine(commentField, {
 });
 
 
-const sendForm = function () {
+const setUserFormSubmit = (onSuccess) => {
   photoForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
     const isValid = pristine.validate();
-    const commentLength = textareaField.value;
-    const maxCommentLength = 140;
-    const isGood = checkLineWidth(commentLength, maxCommentLength);
-    if (!isValid || !isGood) {
-      evt.preventDefault();
+    if (isValid) {
+      sendData(
+        () => onSuccess(), showSuccessMessage(),
+        () => showErrorMessage(),
+        new FormData(evt.target),
+      );
     }
   });
 };
 
-
 const onModalFormEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    onCancelButtonClick();
+    hideForm();
   }
 };
 
@@ -46,7 +48,7 @@ function onUploadFileSubmit () {
   textareaField.value = '';
 }
 
-function onCancelButtonClick () {
+function hideForm () {
   photoForm.reset();
   resetScaleValue();
   resetEffects();
@@ -58,6 +60,6 @@ function onCancelButtonClick () {
 
 
 uploadFile.addEventListener('change', onUploadFileSubmit);
-cancelButton.addEventListener('click', onCancelButtonClick);
+cancelButton.addEventListener('click', hideForm);
 
-export {sendForm};
+export {setUserFormSubmit, hideForm};

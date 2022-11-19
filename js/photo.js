@@ -1,13 +1,11 @@
-import {getPhotoDescription} from './data.js';
-
 const photoTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const photoList = document.querySelector('.pictures');
 
-const userPhotos = getPhotoDescription();
+
 const fragment = document.createDocumentFragment();
 
-const renderPhotos = function () {
-  userPhotos.forEach(({url, description, comments, likes}) => {
+const renderPhotos = function (photos) {
+  photos.forEach(({url, description, comments, likes}) => {
 
     const photo = photoTemplate.cloneNode(true);
 
