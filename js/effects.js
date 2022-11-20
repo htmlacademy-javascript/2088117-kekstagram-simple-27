@@ -7,6 +7,7 @@ const effectLevel = document.querySelector('.effect-level__value');
 const Effects = [
   {
     name: 'none',
+    style: 'none',
     min: 0,
     max: 0,
     step: 0,
@@ -89,7 +90,7 @@ const onSliderUpdate = () => {
   }
   const sliderValue = sliderElement.noUiSlider.get();
   image.style.filter = `${currentEffect.style}(${sliderValue}${currentEffect.unit})`;
-  image.className.add(`effects__preview--${currentEffect.name}`);
+  image.className = `effects__preview--${currentEffect.name}`;
   effectLevel.value = sliderValue;
 };
 

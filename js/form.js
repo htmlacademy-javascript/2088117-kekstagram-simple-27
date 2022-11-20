@@ -1,7 +1,8 @@
 import {isEscapeKey} from './util.js';
-import {checkLineWidth} from './check-line.js';
 import {resetScaleValue} from './scale.js';
 import {resetEffects} from './effects.js';
+import {sendData} from './api.js';
+import {showSuccessMessage, showErrorMessage} from './messages.js';
 
 const photoForm = document.querySelector('.img-upload__form');
 const modalForm = photoForm.querySelector('.img-upload__overlay');
@@ -10,6 +11,7 @@ const uploadFile = photoForm.querySelector('#upload-file');
 const cancelButton = modalForm.querySelector('#upload-cancel');
 const commentField = modalForm.querySelector('.img-upload__text');
 const textareaField = commentField.querySelector('.text__description');
+const uploadButton = modalForm.querySelector('.img-upload__submit');
 
 
 const pristine = new Pristine(commentField, {
@@ -18,24 +20,40 @@ const pristine = new Pristine(commentField, {
   errorTextClass: 'img-upload__error-text',
 });
 
+const blockUploadButton = () => {
+  uploadButton.disabled = true;
+};
 
-const sendForm = function () {
+const unblockUploadButton = () => {
+  uploadButton.disabled = false;
+};
+
+const setUserFormSubmit = (onSuccess) => {
   photoForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
     const isValid = pristine.validate();
-    const commentLength = textareaField.value;
-    const maxCommentLength = 140;
-    const isGood = checkLineWidth(commentLength, maxCommentLength);
-    if (!isValid || !isGood) {
-      evt.preventDefault();
+    if (isValid) {
+      blockUploadButton();
+      sendData(
+        () => {
+          onSuccess();
+          showSuccessMessage();
+          unblockUploadButton();
+        },
+        () => {
+          showErrorMessage();
+          unblockUploadButton();
+        },
+        new FormData(evt.target),
+      );
     }
   });
 };
 
-
 const onModalFormEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    onCancelButtonClick();
+    hideForm();
   }
 };
 
@@ -46,7 +64,7 @@ function onUploadFileSubmit () {
   textareaField.value = '';
 }
 
-function onCancelButtonClick () {
+function hideForm () {
   photoForm.reset();
   resetScaleValue();
   resetEffects();
@@ -58,6 +76,6 @@ function onCancelButtonClick () {
 
 
 uploadFile.addEventListener('change', onUploadFileSubmit);
-cancelButton.addEventListener('click', onCancelButtonClick);
+cancelButton.addEventListener('click', hideForm);
 
-export {sendForm};
+export {setUserFormSubmit, hideForm};
