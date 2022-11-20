@@ -7,6 +7,7 @@ const effectLevel = document.querySelector('.effect-level__value');
 const Effects = [
   {
     name: 'none',
+    style: 'none',
     min: 0,
     max: 0,
     step: 0,

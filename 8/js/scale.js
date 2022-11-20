@@ -33,7 +33,7 @@ const onBiggerButtonClick = () => {
 };
 
 const resetScaleValue = () => {
-  scaleImage();
+  scaleImage(100);
 };
 
 
