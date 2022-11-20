@@ -11,6 +11,7 @@ const uploadFile = photoForm.querySelector('#upload-file');
 const cancelButton = modalForm.querySelector('#upload-cancel');
 const commentField = modalForm.querySelector('.img-upload__text');
 const textareaField = commentField.querySelector('.text__description');
+const uploadButton = modalForm.querySelector('.img-upload__submit');
 
 
 const pristine = new Pristine(commentField, {
@@ -19,15 +20,30 @@ const pristine = new Pristine(commentField, {
   errorTextClass: 'img-upload__error-text',
 });
 
+const blockUploadButton = () => {
+  uploadButton.disabled = true;
+};
+
+const unblockUploadButton = () => {
+  uploadButton.disabled = false;
+};
 
 const setUserFormSubmit = (onSuccess) => {
   photoForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
     const isValid = pristine.validate();
     if (isValid) {
+      blockUploadButton();
       sendData(
-        () => onSuccess(), showSuccessMessage(),
-        () => showErrorMessage(),
+        () => {
+          onSuccess();
+          showSuccessMessage();
+          unblockUploadButton();
+        },
+        () => {
+          showErrorMessage();
+          unblockUploadButton();
+        },
         new FormData(evt.target),
       );
     }
