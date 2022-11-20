@@ -46,10 +46,10 @@ const showErrorMessage = function () {
 function hideMessage () {
   const message = document.querySelector('.success') || document.querySelector('.error');
   message.remove();
-  document.addEventListener('keydown', onMessageEscKeydown);
-  document.addEventListener('click', onOverlayClick);
-  errorButton.addEventListener('click', onErrorButtonClick);
-  successButton.addEventListener('click', onSuccessButtonClick);
+  document.removeEventListener('keydown', onMessageEscKeydown);
+  document.removeEventListener('click', onOverlayClick);
+  errorButton.removeEventListener('click', onErrorButtonClick);
+  successButton.removeEventListener('click', onSuccessButtonClick);
   body.style.overflow = 'auto';
 }
 
