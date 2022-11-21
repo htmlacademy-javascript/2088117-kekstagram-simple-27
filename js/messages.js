@@ -1,4 +1,4 @@
-import {isEscapeKey} from './util.js';
+import {ESCAPEKEY} from './util.js';
 
 const successTemplate = document.querySelector('#success').content.querySelector('.success');
 const successButton = successTemplate.querySelector('.success__button');
@@ -6,51 +6,48 @@ const errorTemplate = document.querySelector('#error').content.querySelector('.e
 const errorButton = errorTemplate.querySelector('.error__button');
 const body = document.querySelector('body');
 
-const onSuccessButtonClick = () => {
+const onElementClick = () => {
   hideMessage();
 };
 
-const onErrorButtonClick = () => {
-  hideMessage();
-};
-
-const onOverlayClick = () => {
-  hideMessage();
-};
 
 const onMessageEscKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
+  if (ESCAPEKEY(evt)) {
     evt.preventDefault();
     hideMessage();
   }
 };
 
+const showMessage = function () {
+  document.addEventListener('keydown', onMessageEscKeydown);
+  document.addEventListener('click', onElementClick);
+  body.style.overflow = 'hidden';
+};
+
 const showSuccessMessage = function () {
   const successMessage = successTemplate.cloneNode(true);
-  document.addEventListener('keydown', onMessageEscKeydown);
-  document.addEventListener('click', onOverlayClick);
-  successButton.addEventListener('click', onSuccessButtonClick);
+  showMessage();
+  successButton.addEventListener('click', onElementClick);
   body.append(successMessage);
-  body.style.overflow = 'hidden';
 };
 
 const showErrorMessage = function () {
   const errorMessage = errorTemplate.cloneNode(true);
-  document.addEventListener('keydown', onMessageEscKeydown);
-  document.addEventListener('click', onOverlayClick);
-  errorButton.addEventListener('click', onErrorButtonClick);
+  showMessage();
+  errorButton.addEventListener('click', onElementClick);
   body.append(errorMessage);
-  body.style.overflow = 'hidden';
 };
 
 function hideMessage () {
   const message = document.querySelector('.success') || document.querySelector('.error');
   message.remove();
   document.removeEventListener('keydown', onMessageEscKeydown);
-  document.removeEventListener('click', onOverlayClick);
-  errorButton.removeEventListener('click', onErrorButtonClick);
-  successButton.removeEventListener('click', onSuccessButtonClick);
+  document.removeEventListener('click', onElementClick);
+  errorButton.removeEventListener('click', onElementClick);
+  successButton.removeEventListener('click', onElementClick);
   body.style.overflow = 'auto';
 }
 
-export {showSuccessMessage, showErrorMessage};
+export {showSuccessMessage, showErrorMessage, hideMessage};
+
+

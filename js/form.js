@@ -1,8 +1,8 @@
-import {isEscapeKey} from './util.js';
+import {ESCAPEKEY} from './util.js';
 import {resetScaleValue} from './scale.js';
 import {resetEffects} from './effects.js';
 import {sendData} from './api.js';
-import {showSuccessMessage, showErrorMessage} from './messages.js';
+import {showSuccessMessage, showErrorMessage, hideMessage} from './messages.js';
 
 const photoForm = document.querySelector('.img-upload__form');
 const modalForm = photoForm.querySelector('.img-upload__overlay');
@@ -20,29 +20,26 @@ const pristine = new Pristine(commentField, {
   errorTextClass: 'img-upload__error-text',
 });
 
-const blockUploadButton = () => {
+function blockUploadButton () {
   uploadButton.disabled = true;
-};
-
-const unblockUploadButton = () => {
   uploadButton.disabled = false;
-};
+}
 
 const setUserFormSubmit = (onSuccess) => {
   photoForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
     const isValid = pristine.validate();
     if (isValid) {
-      blockUploadButton();
+      blockUploadButton(true);
       sendData(
         () => {
           onSuccess();
           showSuccessMessage();
-          unblockUploadButton();
+          blockUploadButton(false);
         },
         () => {
           showErrorMessage();
-          unblockUploadButton();
+          blockUploadButton(false);
         },
         new FormData(evt.target),
       );
@@ -50,10 +47,14 @@ const setUserFormSubmit = (onSuccess) => {
   });
 };
 
+
 const onModalFormEscKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
+  if (ESCAPEKEY(evt)) {
     evt.preventDefault();
-    hideForm();
+    if (document.classList.contains('.error')){
+      hideMessage();
+    }
+    onhideForm();
   }
 };
 
@@ -64,7 +65,7 @@ function onUploadFileSubmit () {
   textareaField.value = '';
 }
 
-function hideForm () {
+function onhideForm () {
   photoForm.reset();
   resetScaleValue();
   resetEffects();
@@ -76,6 +77,6 @@ function hideForm () {
 
 
 uploadFile.addEventListener('change', onUploadFileSubmit);
-cancelButton.addEventListener('click', hideForm);
+cancelButton.addEventListener('click', onhideForm);
 
-export {setUserFormSubmit, hideForm};
+export {setUserFormSubmit, onhideForm};
