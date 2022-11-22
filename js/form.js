@@ -1,8 +1,8 @@
-import {ESCAPEKEY} from './util.js';
+import {isEscapeKey} from './util.js';
 import {resetScaleValue} from './scale.js';
 import {resetEffects} from './effects.js';
 import {sendData} from './api.js';
-import {showSuccessMessage, showErrorMessage, hideMessage} from './messages.js';
+import {showSuccessMessage, showErrorMessage} from './messages.js';
 
 const photoForm = document.querySelector('.img-upload__form');
 const modalForm = photoForm.querySelector('.img-upload__overlay');
@@ -47,16 +47,19 @@ const setUserFormSubmit = (onSuccess) => {
   });
 };
 
+function isErrorMessagelOpen() {
+  return document.querySelectorAll('.error').length > 0;
+}
 
-const onModalFormEscKeydown = (evt) => {
-  if (ESCAPEKEY(evt)) {
+function onModalFormEscKeydown (evt) {
+  if (isEscapeKey(evt)) {
     evt.preventDefault();
-    if (document.classList.contains('.error')){
-      hideMessage();
+    if (isErrorMessagelOpen()) {
+      return;
     }
     onhideForm();
   }
-};
+}
 
 function onUploadFileSubmit () {
   modalForm.classList.remove('hidden');
@@ -79,4 +82,4 @@ function onhideForm () {
 uploadFile.addEventListener('change', onUploadFileSubmit);
 cancelButton.addEventListener('click', onhideForm);
 
-export {setUserFormSubmit, onhideForm};
+export {setUserFormSubmit, onhideForm, onUploadFileSubmit};

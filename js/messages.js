@@ -1,4 +1,4 @@
-import {ESCAPEKEY} from './util.js';
+import {isEscapeKey} from './util.js';
 
 const successTemplate = document.querySelector('#success').content.querySelector('.success');
 const successButton = successTemplate.querySelector('.success__button');
@@ -6,13 +6,14 @@ const errorTemplate = document.querySelector('#error').content.querySelector('.e
 const errorButton = errorTemplate.querySelector('.error__button');
 const body = document.querySelector('body');
 
+
 const onElementClick = () => {
   hideMessage();
 };
 
 
 const onMessageEscKeydown = (evt) => {
-  if (ESCAPEKEY(evt)) {
+  if (isEscapeKey(evt)) {
     evt.preventDefault();
     hideMessage();
   }
@@ -48,6 +49,6 @@ function hideMessage () {
   body.style.overflow = 'auto';
 }
 
-export {showSuccessMessage, showErrorMessage, hideMessage};
+export {showSuccessMessage, showErrorMessage};
 
 

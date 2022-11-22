@@ -1,6 +1,6 @@
-const ESCAPEKEY = (evt) => evt.key === 'Escape';
-
 const ALERT_SHOW_TIME = 5000;
+const ESCAPEKEY = 'Escape';
+const isEscapeKey = (evt) => evt.key === ESCAPEKEY;
 
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
@@ -23,5 +23,4 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-
-export {ESCAPEKEY, showAlert};
+export {isEscapeKey, showAlert};
