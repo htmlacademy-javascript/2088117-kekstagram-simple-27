@@ -2,7 +2,7 @@ import {isEscapeKey} from './util.js';
 import {resetScaleValue} from './scale.js';
 import {resetEffects} from './effects.js';
 import {sendData} from './api.js';
-import {showMessage, modalType} from './messages.js';
+import {showMessage, MODALTYPE} from './messages.js';
 
 const photoForm = document.querySelector('.img-upload__form');
 const modalForm = photoForm.querySelector('.img-upload__overlay');
@@ -34,11 +34,11 @@ const setUserFormSubmit = (onSuccess) => {
       sendData(
         () => {
           onSuccess();
-          showMessage(modalType.success);
+          showMessage(MODALTYPE.success);
           blockUploadButton(false);
         },
         () => {
-          showMessage(modalType.error);
+          showMessage(MODALTYPE.error);
           blockUploadButton(false);
         },
         new FormData(evt.target),

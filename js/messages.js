@@ -1,11 +1,11 @@
 import {isEscapeKey} from './util.js';
 
-const body = document.querySelector('body');
-
-const modalType = {
+const MODALTYPE = {
   success: 'success',
   error: 'error'
 };
+
+const body = document.querySelector('body');
 
 let openedMessage = '';
 
@@ -40,5 +40,5 @@ function hideMessage () {
   body.style.overflow = 'auto';
 }
 
-export {showMessage, modalType};
+export {showMessage, MODALTYPE};
 
