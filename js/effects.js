@@ -1,9 +1,3 @@
-const photoForm = document.querySelector('.img-upload__form');
-const imagePreview = document.querySelector('.img-upload__preview');
-const image = imagePreview.querySelector('img');
-const sliderElement = document.querySelector('.effect-level__slider');
-const effectLevel = document.querySelector('.effect-level__value');
-
 const EFFECTS = [
   {
     name: 'none',
@@ -54,6 +48,12 @@ const EFFECTS = [
     unit: '',
   }
 ];
+
+const photoForm = document.querySelector('.img-upload__form');
+const imagePreview = document.querySelector('.img-upload__preview');
+const image = imagePreview.querySelector('img');
+const sliderElement = document.querySelector('.effect-level__slider');
+const effectLevel = document.querySelector('.effect-level__value');
 
 let currentEffect = EFFECTS[0];
 
