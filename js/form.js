@@ -2,7 +2,7 @@ import {isEscapeKey} from './util.js';
 import {resetScaleValue} from './scale.js';
 import {resetEffects} from './effects.js';
 import {sendData} from './api.js';
-import {showSuccessMessage, showErrorMessage} from './messages.js';
+import {showMessage, MODALTYPE} from './messages.js';
 
 const photoForm = document.querySelector('.img-upload__form');
 const modalForm = photoForm.querySelector('.img-upload__overlay');
@@ -20,29 +20,26 @@ const pristine = new Pristine(commentField, {
   errorTextClass: 'img-upload__error-text',
 });
 
-const blockUploadButton = () => {
+function blockUploadButton () {
   uploadButton.disabled = true;
-};
-
-const unblockUploadButton = () => {
   uploadButton.disabled = false;
-};
+}
 
 const setUserFormSubmit = (onSuccess) => {
   photoForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
     const isValid = pristine.validate();
     if (isValid) {
-      blockUploadButton();
+      blockUploadButton(true);
       sendData(
         () => {
           onSuccess();
-          showSuccessMessage();
-          unblockUploadButton();
+          showMessage(MODALTYPE.success);
+          blockUploadButton(false);
         },
         () => {
-          showErrorMessage();
-          unblockUploadButton();
+          showMessage(MODALTYPE.error);
+          blockUploadButton(false);
         },
         new FormData(evt.target),
       );
@@ -50,12 +47,19 @@ const setUserFormSubmit = (onSuccess) => {
   });
 };
 
-const onModalFormEscKeydown = (evt) => {
+function isErrorMessagelOpen() {
+  return document.querySelectorAll('.error').length > 0;
+}
+
+function onModalFormEscKeydown (evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    hideForm();
+    if (isErrorMessagelOpen()) {
+      return;
+    }
+    onhideForm();
   }
-};
+}
 
 function onUploadFileSubmit () {
   modalForm.classList.remove('hidden');
@@ -64,7 +68,7 @@ function onUploadFileSubmit () {
   textareaField.value = '';
 }
 
-function hideForm () {
+function onhideForm () {
   photoForm.reset();
   resetScaleValue();
   resetEffects();
@@ -76,6 +80,6 @@ function hideForm () {
 
 
 uploadFile.addEventListener('change', onUploadFileSubmit);
-cancelButton.addEventListener('click', hideForm);
+cancelButton.addEventListener('click', onhideForm);
 
-export {setUserFormSubmit, hideForm};
+export {setUserFormSubmit, onhideForm, onUploadFileSubmit};
