@@ -2,7 +2,7 @@ import {isEscapeKey} from './util.js';
 import {resetScaleValue} from './scale.js';
 import {resetEffects} from './effects.js';
 import {sendData} from './api.js';
-import {showMessage, MODALTYPE} from './messages.js';
+import {showMessage, MODAL_TYPE} from './messages.js';
 
 const photoForm = document.querySelector('.img-upload__form');
 const modalForm = photoForm.querySelector('.img-upload__overlay');
@@ -34,11 +34,11 @@ const setUserFormSubmit = (onSuccess) => {
       sendData(
         () => {
           onSuccess();
-          showMessage(MODALTYPE.success);
+          showMessage(MODAL_TYPE.success);
           blockUploadButton(false);
         },
         () => {
-          showMessage(MODALTYPE.error);
+          showMessage(MODAL_TYPE.error);
           blockUploadButton(false);
         },
         new FormData(evt.target),
@@ -47,17 +47,17 @@ const setUserFormSubmit = (onSuccess) => {
   });
 };
 
-function isErrorMessagelOpen() {
+function isErrorMessageOpen() {
   return document.querySelectorAll('.error').length > 0;
 }
 
 function onModalFormEscKeydown (evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    if (isErrorMessagelOpen()) {
+    if (isErrorMessageOpen()) {
       return;
     }
-    onhideForm();
+    onFormClose();
   }
 }
 
@@ -68,7 +68,7 @@ function onUploadFileSubmit () {
   textareaField.value = '';
 }
 
-function onhideForm () {
+function onFormClose () {
   photoForm.reset();
   resetScaleValue();
   resetEffects();
@@ -80,6 +80,6 @@ function onhideForm () {
 
 
 uploadFile.addEventListener('change', onUploadFileSubmit);
-cancelButton.addEventListener('click', onhideForm);
+cancelButton.addEventListener('click', onFormClose);
 
-export {setUserFormSubmit, onhideForm, onUploadFileSubmit};
+export {setUserFormSubmit, onFormClose, onUploadFileSubmit};

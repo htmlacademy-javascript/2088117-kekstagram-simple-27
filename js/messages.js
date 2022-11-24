@@ -1,6 +1,6 @@
 import {isEscapeKey} from './util.js';
 
-const MODALTYPE = {
+const MODAL_TYPE = {
   success: 'success',
   error: 'error'
 };
@@ -40,5 +40,5 @@ function hideMessage () {
   body.style.overflow = 'auto';
 }
 
-export {showMessage, MODALTYPE};
+export {showMessage, MODAL_TYPE};
 
